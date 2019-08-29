@@ -1,8 +1,15 @@
+import java.io.File;
+import java.util.Formatter;
 import java.util.Scanner;
 
 
 
 public class Duke {
+
+    private static int counterTaskList = 0;
+    private static TaskforDuke[] taskList = new TaskforDuke[100];
+
+
     public static void main(String[] args) {
         String logo = "     ____        _        \n"
                 + "    |  _ \\ _   _| | _____ \n"
@@ -17,8 +24,6 @@ public class Duke {
 
 
         String s = "null";
-        int counterTaskList = 0;
-        TaskforDuke[] taskList = new TaskforDuke[100];
         while(true){
             Scanner myObj = new Scanner(System.in);  // Create a Scanner object
             s = myObj.nextLine();  // Read user input
@@ -123,6 +128,16 @@ public class Duke {
                 System.out.println("    You now have " + counterTaskList + " task(s) in the list.");
                 System.out.println("    __________________________________________________________________________________________\n");
 
+            }
+
+            else if(s.contains("add new record")){
+                createFile g = new createFile();
+                g.openFile();
+                g.addRecords();
+                g.closeFile();
+                System.out.println("    __________________________________________________________________________________________");
+                System.out.println("    File has been created");
+                System.out.println("    __________________________________________________________________________________________\n");
             }
 
             else{
