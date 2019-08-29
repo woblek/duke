@@ -30,11 +30,12 @@ public class Duke {
                 return;
             }
 
-            else if (s.equals("list")&&(counterTaskList!=0)){
+            else if (s.equals("list")&&(counterTaskList>0)){
                 System.out.println("    __________________________________________________________________________________________\n");
                 System.out.println("    Here are the tasks in your list:\n");
                 for(int i = 0; i < counterTaskList; i++){
-                    System.out.println("    " + (i+1) + ". [" + taskList[i].getStatusIcon() + "] " + taskList[i].description + "\n");
+                    System.out.println("    " + (i+1) + ". " + taskList[i].toString());
+//                    System.out.println("    " + (i+1) + ". [" + taskList[i].type + "][" + taskList[i].getStatusIcon() + "] " + taskList[i].description + "\n");
                 }
                 System.out.println("    __________________________________________________________________________________________\n");
             }
@@ -45,19 +46,58 @@ public class Duke {
                     taskList[indexDone - 1].setDone();
                     System.out.println("    __________________________________________________________________________________________\n");
                     System.out.println("    Nice! I've marked this task as done: " + "\n");
-                    System.out.println("    " + taskList[indexDone - 1].getStatusIcon() + " " + taskList[indexDone - 1].description + "\n");
+                    System.out.println("    " + taskList[indexDone - 1].toString());
+//                    System.out.println("    " + taskList[indexDone - 1].getStatusIcon() + " " + taskList[indexDone - 1].description + "\n");
                     System.out.println("    __________________________________________________________________________________________\n");
                 }
             }
 
-            else {
-                TaskforDuke t = new TaskforDuke(s);
-                taskList[counterTaskList] = t;
+            else if ((s.contains("todo"))){
+                String sExtracted = s.replaceAll("todo ", "");
+                taskList[counterTaskList] = new Todo(sExtracted);
                 counterTaskList++;
                 System.out.println("    __________________________________________________________________________________________\n");
-                System.out.println("    Added: " + s + "\n");  // Output user input
+                System.out.println("    Got it. I've added this task: " + sExtracted + "");
+                System.out.println("      " + taskList[counterTaskList-1].toString());
+                System.out.println("    You now have " + counterTaskList + " task(s) in the list.");
                 System.out.println("    __________________________________________________________________________________________\n");
             }
+
+            else if (s.contains("deadline")){
+                String sExtracted = s.replaceAll("deadline ", "");
+                String[] details = sExtracted.split("/", 2);
+                taskList[counterTaskList] = new Deadline(details[0], details[1]);
+
+//                System.out.println(details[0]);//checking
+//                System.out.println(details[1]);//checking
+
+                counterTaskList++;
+                System.out.println("    __________________________________________________________________________________________\n");
+                System.out.println("    Got it. I've added this task: " + details[0] + "");
+                System.out.println("      " + taskList[counterTaskList-1].toString());
+                System.out.println("    You now have " + counterTaskList + " task(s) in the list.");
+                System.out.println("    __________________________________________________________________________________________\n");
+
+            }
+
+            else if(s.contains("event")){
+                String sExtracted = s.replaceAll("event", "");
+                String[] details = sExtracted.split("/", 2);
+                taskList[counterTaskList] = new Event(details[0], details[1]);
+
+//                System.out.println(details[0]);//checking
+//                System.out.println(details[1]);//checking
+                counterTaskList++;
+
+                System.out.println("    __________________________________________________________________________________________\n");
+                System.out.println("    Got it. I've added this task: " + details[0] + "");
+                System.out.println("      " + taskList[counterTaskList-1].toString());
+                System.out.println("    You now have " + counterTaskList + " task(s) in the list.");
+                System.out.println("    __________________________________________________________________________________________\n");
+
+            }
+
+
 
         }
     }
