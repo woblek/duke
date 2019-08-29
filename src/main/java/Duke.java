@@ -15,6 +15,8 @@ public class Duke {
 
 
         String s = "null";
+        String[] taskList= new String[100];
+        int counterTaskList = 0;
 //        while(!s.equals("bye")){
         while(true){
             Scanner myObj = new Scanner(System.in);  // Create a Scanner object
@@ -28,9 +30,21 @@ public class Duke {
                 return;
             }
 
-            System.out.println("    __________________________________________________________________________________________\n");
-            System.out.println("    " + s + "\n");  // Output user input
-            System.out.println("    __________________________________________________________________________________________\n");
+            else if (s.equals("list")&&(counterTaskList!=0)){
+                System.out.println("    __________________________________________________________________________________________\n");
+                for(int i = 0; i < counterTaskList; i++){
+                    System.out.println("    " + (i+1) + " " + taskList[i] + "\n");
+                }
+                System.out.println("    __________________________________________________________________________________________\n");
+            }
+
+            else {
+                taskList[counterTaskList] = s;
+                counterTaskList++;
+                System.out.println("    __________________________________________________________________________________________\n");
+                System.out.println("    Added: " + s + "\n");  // Output user input
+                System.out.println("    __________________________________________________________________________________________\n");
+            }
 
         }
     }
