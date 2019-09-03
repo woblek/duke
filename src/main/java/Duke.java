@@ -6,8 +6,7 @@ import java.util.Scanner;
 
 public class Duke {
 
-    private static int counterTaskList = 0;
-    private static TaskforDuke[] taskList = new TaskforDuke[100];
+
 
 
     public static void main(String[] args) {
@@ -22,7 +21,8 @@ public class Duke {
         System.out.println("    What can I do for you?");
         System.out.println("    __________________________________________________________________________________________\n");
 
-
+        int counterTaskList = 0;
+        TaskforDuke[] taskList = new TaskforDuke[100];
         String s = "null";
         while(true){
             Scanner myObj = new Scanner(System.in);  // Create a Scanner object
@@ -35,14 +35,22 @@ public class Duke {
                 return;
             }
 
-            else if (s.equals("list")&&(counterTaskList>0)){
-                System.out.println("    __________________________________________________________________________________________");
-                System.out.println("    Here are the tasks in your list:");
-                for(int i = 0; i < counterTaskList; i++){
-                    System.out.println("    " + (i+1) + ". " + taskList[i].toString());
-//                    System.out.println("    " + (i+1) + ". [" + taskList[i].type + "][" + taskList[i].getStatusIcon() + "] " + taskList[i].description + "\n");
+            else if (s.equals("list")){
+                if(counterTaskList>0) {
+                    System.out.println("    __________________________________________________________________________________________");
+                    System.out.println("    Here are the tasks in your list:");
+                    for (int i = 0; i < counterTaskList; i++) {
+                        System.out.println("    " + (i + 1) + ". " + taskList[i].toString());
+                        //                    System.out.println("    " + (i+1) + ". [" + taskList[i].type + "][" + taskList[i].getStatusIcon() + "] " + taskList[i].description + "\n");
+                    }
+                    System.out.println("    __________________________________________________________________________________________\n");
                 }
-                System.out.println("    __________________________________________________________________________________________\n");
+
+                else{
+                    System.out.println("    __________________________________________________________________________________________");
+                    System.out.println("    Your list is empty!");
+                    System.out.println("    __________________________________________________________________________________________\n");
+                }
             }
 
             else if (s.contains("done")){
