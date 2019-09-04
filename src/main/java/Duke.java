@@ -1,4 +1,4 @@
-import java.io.File;
+import java.io.*;
 import java.util.Formatter;
 import java.util.Scanner;
 
@@ -9,7 +9,7 @@ public class Duke {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String logo = "     ____        _        \n"
                 + "    |  _ \\ _   _| | _____ \n"
                 + "    | | | | | | | |/ / _ \\\n"
@@ -138,14 +138,30 @@ public class Duke {
 
             }
 
-            else if(s.contains("add new record")){
-                createFile g = new createFile();
-                g.openFile();
-                g.addRecords();
-                g.closeFile();
-                System.out.println("    __________________________________________________________________________________________");
-                System.out.println("    File has been created");
-                System.out.println("    __________________________________________________________________________________________\n");
+            else if(s.contains("Load")){
+                File file = new File("C:\\Users\\Lee Raiyan\\Documents\\1. NUS\\Semester 3\\CS2113T Software Engineering\\duke\\data\\dukedata.txt");
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String st;
+                while ((st = br.readLine()) != null) {
+                    Character first = st.charAt(0);
+                    if (first.equals('T')){
+                        String[] details = st.split(",");
+
+                        System.out.println("    This item is a Todo\n");
+
+                    }
+
+                    else if (first.equals('D')){
+                        System.out.println("    This item is a Deadline\n");
+
+                    }
+
+                    else if (first.equals('E')){
+                        System.out.println("    This item is an Event\n");
+
+                    }
+                }
+
             }
 
             else{
