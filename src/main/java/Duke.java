@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Scanner;
 
@@ -11,7 +12,8 @@ public class Duke {
 
     public static void main(String[] args) throws IOException {
         int counterTaskList = 0;
-        TaskforDuke[] taskList = new TaskforDuke[100];
+//        TaskforDuke[] taskList = new TaskforDuke[100];
+        ArrayList<TaskforDuke> taskList = new ArrayList<TaskforDuke>(0);
 
         // Get the file
         File f = new File("C:\\Users\\Lee Raiyan\\Documents\\1. NUS\\Semester 3\\CS2113T Software Engineering\\duke\\data\\dukedata.txt");
@@ -31,9 +33,9 @@ public class Duke {
 
 
                     //create todo and add task
-                    taskList[counterTaskList] = new Todo(details[2]);
+                    taskList.add(new Todo(details[2]));
                     if(details[1].equals("true")){
-                        taskList[counterTaskList].setDone();
+                        taskList.get(counterTaskList).setDone();
                     }
                     counterTaskList++;
 
@@ -52,13 +54,12 @@ public class Duke {
                     date[3] = Integer.parseInt(timeString[1]);
 
                     //create and add deadline to tasklist
-                    taskList[counterTaskList] = new Deadline(details[2], date);
-
+                    taskList.add(new Deadline(details[2], date));
+                    if(details[1].equals("true")){
+                        taskList.get(counterTaskList).setDone();
+                    }
 
                     //update counterTasklist
-                    if(details[1].equals("true")){
-                        taskList[counterTaskList].setDone();
-                    }
                     counterTaskList++;
                 }
 
@@ -76,13 +77,13 @@ public class Duke {
 
 
                     //create and add deadline to tasklist
-                    taskList[counterTaskList] = new Deadline(details[2], date);
+                    taskList.add(new Event(details[2], date));
+                    if(details[1].equals("true")){
+                        taskList.get(counterTaskList).setDone();
+                    }
 
 
                     //update counterTasklist
-                    if(details[1].equals("true")){
-                        taskList[counterTaskList].setDone();
-                    }
                     counterTaskList++;
                 }
             }
@@ -132,7 +133,7 @@ public class Duke {
                     System.out.println("    __________________________________________________________________________________________");
                     System.out.println("    Here are the tasks in your list:");
                     for (int i = 0; i < counterTaskList; i++) {
-                        System.out.println("    " + (i + 1) + ". " + taskList[i].toString());
+                        System.out.println("    " + (i + 1) + ". " + taskList.get(i).toString());
                         //                    System.out.println("    " + (i+1) + ". [" + taskList[i].type + "][" + taskList[i].getStatusIcon() + "] " + taskList[i].description + "\n");
                     }
                     System.out.println("    __________________________________________________________________________________________\n");
@@ -148,10 +149,10 @@ public class Duke {
             else if (s.contains("done")){
                 int indexDone = Integer.parseInt(s.replaceAll("[\\D]", ""));
                 if(indexDone > 0) {
-                    taskList[indexDone - 1].setDone();
+                    taskList.get(indexDone - 1).setDone();
                     System.out.println("    __________________________________________________________________________________________");
                     System.out.println("    Nice! I've marked this task as done: " + "\n");
-                    System.out.println("    " + taskList[indexDone - 1].toString());
+                    System.out.println("    " + taskList.get(indexDone - 1).toString());
 //                    System.out.println("    " + taskList[indexDone - 1].getStatusIcon() + " " + taskList[indexDone - 1].description + "\n");
                     System.out.println("    __________________________________________________________________________________________\n");
                 }
@@ -171,11 +172,11 @@ public class Duke {
                 }
 
                 //adding the object to the object array
-                taskList[counterTaskList] = new Todo(sExtracted);
+                taskList.add(new Todo(sExtracted));
                 counterTaskList++;
                 System.out.println("    __________________________________________________________________________________________");
                 System.out.println("    Got it. I've added this task: " + sExtracted + "");
-                System.out.println("      " + taskList[counterTaskList - 1].toString());
+                System.out.println("      " + taskList.get(counterTaskList - 1).toString());
                 System.out.println("    You now have " + counterTaskList + " task(s) in the list.");
                 System.out.println("    __________________________________________________________________________________________\n");
             }
@@ -203,14 +204,14 @@ public class Duke {
                 date[2] = Integer.parseInt(timeString[0]);
                 date[3] = Integer.parseInt(timeString[1]);
 
-                taskList[counterTaskList] = new Deadline(details[0], date);
+                taskList.add(new Deadline(details[0], date));
                 counterTaskList++;
 
 
                 //inform user of the new record
                 System.out.println("    __________________________________________________________________________________________");
                 System.out.println("    Got it. I've added this task: " + details[0] + "");
-                System.out.println("      " + taskList[counterTaskList-1].toString());
+                System.out.println("      " + taskList.get(counterTaskList-1).toString());
                 System.out.println("    You now have " + counterTaskList + " task(s) in the list.");
                 System.out.println("    __________________________________________________________________________________________\n");
 
@@ -238,7 +239,7 @@ public class Duke {
                 date[1] = Integer.parseInt(dateString[1]);
                 date[2] = Integer.parseInt(timeString[0]);
                 date[3] = Integer.parseInt(timeString[1]);
-                taskList[counterTaskList] = new Event(details[0], date);
+                taskList.add(new Event(details[0], date));
                 counterTaskList++;
 
 
@@ -246,7 +247,7 @@ public class Duke {
                 //inform user of new record
                 System.out.println("    __________________________________________________________________________________________");
                 System.out.println("    Got it. I've added this task: " + details[0] + "");
-                System.out.println("      " + taskList[counterTaskList-1].toString());
+                System.out.println("      " + taskList.get(counterTaskList-1).toString());
                 System.out.println("    You now have " + counterTaskList + " task(s) in the list.");
                 System.out.println("    __________________________________________________________________________________________\n");
 
