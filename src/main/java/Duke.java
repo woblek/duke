@@ -158,6 +158,23 @@ public class Duke {
                 }
             }
 
+            else if(s.contains("delete")){
+
+                if(taskList.size() > 0){
+                    int indexDelete = Integer.parseInt(s.replaceAll("[\\D]", ""));
+                    String sDelete = taskList.get(indexDelete-1).toString();
+                    taskList.remove(indexDelete - 1);
+                    counterTaskList--;
+
+                    //inform user of deletion
+                    System.out.println("    __________________________________________________________________________________________");
+                    System.out.println("    Noted! I've removed this task: ");
+                    System.out.println("    " + sDelete);
+                    System.out.println("    You now have " + taskList.size() + " tasks in the list");
+                    System.out.println("    __________________________________________________________________________________________\n");
+                }
+            }
+
             else if ((s.contains("todo"))){
                 String sExtracted = s.replaceAll("todo ", "");
 
