@@ -12,6 +12,11 @@ public class Event extends TaskforDuke {
         return "[E]" + super.toString() + " (at: " + at + ")";
     }
 
+    @Override
+    public String getDate(){
+        return at;
+    }
+
 //    @Override
 //    public void setType(String s){
 //        super.setType(s);

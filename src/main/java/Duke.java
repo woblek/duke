@@ -32,7 +32,7 @@ public class Duke {
 
                     //create todo and add task
                     taskList[counterTaskList] = new Todo(details[2]);
-                    if(details[1].equals("1")){
+                    if(details[1].equals("true")){
                         taskList[counterTaskList].setDone();
                     }
                     counterTaskList++;
@@ -46,7 +46,7 @@ public class Duke {
 
                     //create and add deadline to tasklist
                     taskList[counterTaskList] = new Deadline(details[2], details[3]);
-                    if(details[1].equals("1")){
+                    if(details[1].equals("true")){
                         taskList[counterTaskList].setDone();
                     }
                     counterTaskList++;
@@ -60,7 +60,7 @@ public class Duke {
 
                     //create and add deadline to tasklist
                     taskList[counterTaskList] = new Event(details[2], details[3]);
-                    if(details[1].equals("1")){
+                    if(details[1].equals("true")){
                         taskList[counterTaskList].setDone();
                     }
                     counterTaskList++;
@@ -88,6 +88,16 @@ public class Duke {
             s = myObj.nextLine();  // Read user input
 
             if (s.equals("bye")){
+
+
+                //save all data into text file
+                createFile g = new createFile();
+                g.openFile();
+                g.addRecords(counterTaskList,taskList);
+                g.closeFile();
+
+
+                //print goodbye message
                 System.out.println("    __________________________________________________________________________________________\n");
                 System.out.println("    Bye. Hope to see you again soon!");
                 System.out.println("    __________________________________________________________________________________________\n");

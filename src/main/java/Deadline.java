@@ -12,6 +12,12 @@ public class Deadline extends TaskforDuke {
         return "[D]" + super.toString() + " (by: " + by + ")";
     }
 
+
+    @Override
+    public String getDate(){
+        return by;
+    }
+
 //    @Override
 //    public void setType(String s){
 //        super.setType(s);

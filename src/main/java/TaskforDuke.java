@@ -16,6 +16,10 @@ public class TaskforDuke {
         return description;
     }
 
+    public String getDate(){
+        return "There is no date for Todo";
+    }
+
     public void setDone(){
         isDone = true;
     }
