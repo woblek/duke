@@ -168,7 +168,7 @@ public class Duke {
 
                     //inform user of deletion
                     System.out.println("    __________________________________________________________________________________________");
-                    System.out.println("    Noted! I've removed this task: ");
+                    System.out.println("    Noted! I've removed this task:");
                     System.out.println("    " + sDelete);
                     System.out.println("    You now have " + taskList.size() + " tasks in the list");
                     System.out.println("    __________________________________________________________________________________________\n");
