@@ -7,13 +7,15 @@ import java.util.Scanner;
 
 public class Duke {
 
-
+    private static Parser prsr = new Parser();
+    private static Ui ui = new Ui();
+    private static Storage storage = new Storage();
 
 
     public static void main(String[] args) throws IOException {
         int counterTaskList = 0;
-//        TaskforDuke[] taskList = new TaskforDuke[100];
         ArrayList<TaskforDuke> taskList = new ArrayList<TaskforDuke>(0);
+
 
         // Get the file
         File f = new File("C:\\Users\\Lee Raiyan\\Documents\\1. NUS\\Semester 3\\CS2113T Software Engineering\\duke\\data\\dukedata.txt");
@@ -21,73 +23,8 @@ public class Duke {
         // Check if the specified file
         // Exists or not
         if (f.exists()) {
-            File file = new File("C:\\Users\\Lee Raiyan\\Documents\\1. NUS\\Semester 3\\CS2113T Software Engineering\\duke\\data\\dukedata.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String st;
-            while ((st = br.readLine()) != null) {
-                Character first = st.charAt(0);
-                if (first.equals('T')){
-
-                    //splitting string
-                    String[] details = st.split(",");
-
-
-                    //create todo and add task
-                    taskList.add(new Todo(details[2]));
-                    if(details[1].equals("true")){
-                        taskList.get(counterTaskList).setDone();
-                    }
-                    counterTaskList++;
-
-                }
-
-                else if (first.equals('D')){
-
-                    //split string
-                    String[] details = st.split(",");
-                    String[] dateString = details[3].split("/", 3);
-                    String[] timeString = dateString[2].split(" ", 2);
-                    Integer[] date = new Integer[4];
-                    date[0] = Integer.parseInt(dateString[0]);
-                    date[1] = Integer.parseInt(dateString[1]);
-                    date[2] = Integer.parseInt(timeString[0]);
-                    date[3] = Integer.parseInt(timeString[1]);
-
-                    //create and add deadline to tasklist
-                    taskList.add(new Deadline(details[2], date));
-                    if(details[1].equals("true")){
-                        taskList.get(counterTaskList).setDone();
-                    }
-
-                    //update counterTasklist
-                    counterTaskList++;
-                }
-
-                else if (first.equals('E')){
-
-                    //split string
-                    String[] details = st.split(",");
-                    String[] dateString = details[3].split("/", 3);
-                    String[] timeString = dateString[2].split(" ", 2);
-                    Integer[] date = new Integer[4];
-                    date[0] = Integer.parseInt(dateString[0]);
-                    date[1] = Integer.parseInt(dateString[1]);
-                    date[2] = Integer.parseInt(timeString[0]);
-                    date[3] = Integer.parseInt(timeString[1]);
-
-
-                    //create and add deadline to tasklist
-                    taskList.add(new Event(details[2], date));
-                    if(details[1].equals("true")){
-                        taskList.get(counterTaskList).setDone();
-                    }
-
-
-                    //update counterTasklist
-                    counterTaskList++;
-                }
-            }
-            br.close();
+            taskList = storage.load();
+            counterTaskList = storage.counterTaskList;
         }
         else
             System.out.println("Does not Exists");
@@ -176,19 +113,15 @@ public class Duke {
             }
 
             else if ((s.contains("todo"))){
-                String sExtracted = s.replaceAll("todo ", "");
 
                 //to check if the string is empty
-                String checker0 = sExtracted.replaceAll("todo", "");
-                String checker1 = checker0.replaceAll(" ", "");
-                if(checker1.isEmpty()){
-                    System.out.println("    __________________________________________________________________________________________");
-                    System.out.println("    ☹ OOPS!!! The description of a todo cannot be empty!");
-                    System.out.println("    __________________________________________________________________________________________\n");
+                if(prsr.isEmpty(s)){
+                    ui.dialogueEmpty(s);
                     continue;
                 }
 
                 //adding the object to the object array
+                String sExtracted = s.replaceAll("todo ", "");
                 taskList.add(new Todo(sExtracted));
                 counterTaskList++;
                 System.out.println("    __________________________________________________________________________________________");
@@ -199,19 +132,14 @@ public class Duke {
             }
 
             else if (s.contains("deadline")){
-                String sExtracted = s.replaceAll("deadline ", "");
-
                 //to check if the string is empty
-                String checker0 = sExtracted.replaceAll("deadline", "");
-                String checker1 = checker0.replaceAll(" ", "");
-                if(checker1.isEmpty()){
-                    System.out.println("    __________________________________________________________________________________________");
-                    System.out.println("    ☹ OOPS!!! The description of a todo cannot be empty!");
-                    System.out.println("    __________________________________________________________________________________________\n");
+                if(prsr.isEmpty(s)){
+                    ui.dialogueEmpty(s);
                     continue;
                 }
 
                 //adding the object to the object array
+                String sExtracted = s.replaceAll("deadline ", "");
                 String[] details = sExtracted.split("/by ", 2);
                 String[] dateString = details[1].split("/", 3);
                 String[] timeString = dateString[2].split(" ", 2);
@@ -235,19 +163,14 @@ public class Duke {
             }
 
             else if(s.contains("event")){
-                String sExtracted = s.replaceAll("event", "");
-
                 //to check if the string is empty
-                String checker0 = sExtracted.replaceAll("event", "");
-                String checker1 = checker0.replaceAll(" ", "");
-                if(checker1.isEmpty()){
-                    System.out.println("    __________________________________________________________________________________________");
-                    System.out.println("    ☹ OOPS!!! The description of a todo cannot be empty!");
-                    System.out.println("    __________________________________________________________________________________________\n");
+                if(prsr.isEmpty(s)){
+                    ui.dialogueEmpty(s);
                     continue;
                 }
 
                 //adding the object to the object array
+                String sExtracted = s.replaceAll("event", "");
                 String[] details = sExtracted.split("/at ", 2);
                 String[] dateString = details[1].split("/", 3);
                 String[] timeString = dateString[2].split(" ", 2);
@@ -268,6 +191,18 @@ public class Duke {
                 System.out.println("    You now have " + counterTaskList + " task(s) in the list.");
                 System.out.println("    __________________________________________________________________________________________\n");
 
+            }
+
+            else if(s.contains("find")){
+                String[] toFind = s.split(" ", 2);
+                System.out.println("    __________________________________________________________________________________________");
+                System.out.println("    Here are the matching tasks in your list:");
+                for(int i = 0; i < counterTaskList; i++){
+                    if(taskList.get(i).description.contains(toFind[1])){
+                        System.out.println("    " + (i + 1) + ". " + taskList.get(i).toString());
+                    }
+                }
+                System.out.println("    __________________________________________________________________________________________\n");
             }
 
             else{
