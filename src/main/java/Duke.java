@@ -10,6 +10,66 @@ public class Duke {
 
 
     public static void main(String[] args) throws IOException {
+        int counterTaskList = 0;
+        TaskforDuke[] taskList = new TaskforDuke[100];
+
+        // Get the file
+        File f = new File("C:\\Users\\Lee Raiyan\\Documents\\1. NUS\\Semester 3\\CS2113T Software Engineering\\duke\\data\\dukedata.txt");
+
+        // Check if the specified file
+        // Exists or not
+        if (f.exists()) {
+            File file = new File("C:\\Users\\Lee Raiyan\\Documents\\1. NUS\\Semester 3\\CS2113T Software Engineering\\duke\\data\\dukedata.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String st;
+            while ((st = br.readLine()) != null) {
+                Character first = st.charAt(0);
+                if (first.equals('T')){
+
+                    //splitting string
+                    String[] details = st.split(",");
+
+
+                    //create todo and add task
+                    taskList[counterTaskList] = new Todo(details[2]);
+                    if(details[1].equals("1")){
+                        taskList[counterTaskList].setDone();
+                    }
+                    counterTaskList++;
+
+                }
+
+                else if (first.equals('D')){
+
+                    //split string
+                    String[] details = st.split(",");
+
+                    //create and add deadline to tasklist
+                    taskList[counterTaskList] = new Deadline(details[2], details[3]);
+                    if(details[1].equals("1")){
+                        taskList[counterTaskList].setDone();
+                    }
+                    counterTaskList++;
+                }
+
+                else if (first.equals('E')){
+
+                    //split string
+                    String[] details = st.split(",");
+
+
+                    //create and add deadline to tasklist
+                    taskList[counterTaskList] = new Event(details[2], details[3]);
+                    if(details[1].equals("1")){
+                        taskList[counterTaskList].setDone();
+                    }
+                    counterTaskList++;
+                }
+            }
+            br.close();
+        }
+        else
+            System.out.println("Does not Exists");
         String logo = "     ____        _        \n"
                 + "    |  _ \\ _   _| | _____ \n"
                 + "    | | | | | | | |/ / _ \\\n"
@@ -21,8 +81,7 @@ public class Duke {
         System.out.println("    What can I do for you?");
         System.out.println("    __________________________________________________________________________________________\n");
 
-        int counterTaskList = 0;
-        TaskforDuke[] taskList = new TaskforDuke[100];
+
         String s = "null";
         while(true){
             Scanner myObj = new Scanner(System.in);  // Create a Scanner object
@@ -135,32 +194,6 @@ public class Duke {
                 System.out.println("      " + taskList[counterTaskList-1].toString());
                 System.out.println("    You now have " + counterTaskList + " task(s) in the list.");
                 System.out.println("    __________________________________________________________________________________________\n");
-
-            }
-
-            else if(s.contains("Load")){
-                File file = new File("C:\\Users\\Lee Raiyan\\Documents\\1. NUS\\Semester 3\\CS2113T Software Engineering\\duke\\data\\dukedata.txt");
-                BufferedReader br = new BufferedReader(new FileReader(file));
-                String st;
-                while ((st = br.readLine()) != null) {
-                    Character first = st.charAt(0);
-                    if (first.equals('T')){
-                        String[] details = st.split(",");
-
-                        System.out.println("    This item is a Todo\n");
-
-                    }
-
-                    else if (first.equals('D')){
-                        System.out.println("    This item is a Deadline\n");
-
-                    }
-
-                    else if (first.equals('E')){
-                        System.out.println("    This item is an Event\n");
-
-                    }
-                }
 
             }
 
