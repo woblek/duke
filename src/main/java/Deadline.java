@@ -1,25 +1,23 @@
 public class Deadline extends TaskforDuke {
 
-    protected String by;
+    protected Integer[] by;
 
-    public Deadline(String description, String by) {
+    public Deadline(String description, Integer[] by) {
         super(description);
         this.by = by;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + getDate() + ")";
     }
 
 
     @Override
     public String getDate(){
-        return by;
+        String result = by[0] + "/" + by[1] + "/" + by[2] + " " + by[3];
+        return result;
     }
 
-//    @Override
-//    public void setType(String s){
-//        super.setType(s);
-//    }
+
 }

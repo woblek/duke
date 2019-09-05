@@ -1,6 +1,7 @@
 T,true,read book
-D,true,return book,June 6th
-E,true,project meeting,Aug 6th 2-4pm
+D,true,return book,11/6/2019 1800
+D,true,project meeting,12/7/2019 1800
 T,false,join sports club
 T,false,kick a ball
-E,false, senior seminar,August 22
+D,false, senior seminar,22/8/2019 1500
+D,false,return book ,2/12/2019 1800

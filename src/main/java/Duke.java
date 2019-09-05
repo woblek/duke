@@ -43,9 +43,19 @@ public class Duke {
 
                     //split string
                     String[] details = st.split(",");
+                    String[] dateString = details[3].split("/", 3);
+                    String[] timeString = dateString[2].split(" ", 2);
+                    Integer[] date = new Integer[4];
+                    date[0] = Integer.parseInt(dateString[0]);
+                    date[1] = Integer.parseInt(dateString[1]);
+                    date[2] = Integer.parseInt(timeString[0]);
+                    date[3] = Integer.parseInt(timeString[1]);
 
                     //create and add deadline to tasklist
-                    taskList[counterTaskList] = new Deadline(details[2], details[3]);
+                    taskList[counterTaskList] = new Deadline(details[2], date);
+
+
+                    //update counterTasklist
                     if(details[1].equals("true")){
                         taskList[counterTaskList].setDone();
                     }
@@ -56,10 +66,20 @@ public class Duke {
 
                     //split string
                     String[] details = st.split(",");
+                    String[] dateString = details[3].split("/", 3);
+                    String[] timeString = dateString[2].split(" ", 2);
+                    Integer[] date = new Integer[4];
+                    date[0] = Integer.parseInt(dateString[0]);
+                    date[1] = Integer.parseInt(dateString[1]);
+                    date[2] = Integer.parseInt(timeString[0]);
+                    date[3] = Integer.parseInt(timeString[1]);
 
 
                     //create and add deadline to tasklist
-                    taskList[counterTaskList] = new Event(details[2], details[3]);
+                    taskList[counterTaskList] = new Deadline(details[2], date);
+
+
+                    //update counterTasklist
                     if(details[1].equals("true")){
                         taskList[counterTaskList].setDone();
                     }
@@ -70,6 +90,9 @@ public class Duke {
         }
         else
             System.out.println("Does not Exists");
+
+
+
         String logo = "     ____        _        \n"
                 + "    |  _ \\ _   _| | _____ \n"
                 + "    | | | | | | | |/ / _ \\\n"
@@ -171,9 +194,20 @@ public class Duke {
                 }
 
                 //adding the object to the object array
-                String[] details = sExtracted.split("/", 2);
-                taskList[counterTaskList] = new Deadline(details[0], details[1]);
+                String[] details = sExtracted.split("/by ", 2);
+                String[] dateString = details[1].split("/", 3);
+                String[] timeString = dateString[2].split(" ", 2);
+                Integer[] date = new Integer[4];
+                date[0] = Integer.parseInt(dateString[0]);
+                date[1] = Integer.parseInt(dateString[1]);
+                date[2] = Integer.parseInt(timeString[0]);
+                date[3] = Integer.parseInt(timeString[1]);
+
+                taskList[counterTaskList] = new Deadline(details[0], date);
                 counterTaskList++;
+
+
+                //inform user of the new record
                 System.out.println("    __________________________________________________________________________________________");
                 System.out.println("    Got it. I've added this task: " + details[0] + "");
                 System.out.println("      " + taskList[counterTaskList-1].toString());
@@ -196,9 +230,20 @@ public class Duke {
                 }
 
                 //adding the object to the object array
-                String[] details = sExtracted.split("/", 2);
-                taskList[counterTaskList] = new Event(details[0], details[1]);
+                String[] details = sExtracted.split("/at ", 2);
+                String[] dateString = details[1].split("/", 3);
+                String[] timeString = dateString[2].split(" ", 2);
+                Integer[] date = new Integer[4];
+                date[0] = Integer.parseInt(dateString[0]);
+                date[1] = Integer.parseInt(dateString[1]);
+                date[2] = Integer.parseInt(timeString[0]);
+                date[3] = Integer.parseInt(timeString[1]);
+                taskList[counterTaskList] = new Event(details[0], date);
                 counterTaskList++;
+
+
+
+                //inform user of new record
                 System.out.println("    __________________________________________________________________________________________");
                 System.out.println("    Got it. I've added this task: " + details[0] + "");
                 System.out.println("      " + taskList[counterTaskList-1].toString());

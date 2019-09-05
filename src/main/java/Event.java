@@ -1,24 +1,20 @@
 public class Event extends TaskforDuke {
 
-    protected String at;
+    protected Integer[] at;
 
-    public Event(String description, String at) {
+    public Event(String description, Integer[] at) {
         super(description);
         this.at = at;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + at + ")";
+        return "[E]" + super.toString() + " (at: " + getDate() + ")";
     }
 
     @Override
     public String getDate(){
-        return at;
+        String result = at[0] + "/" + at[1] + "/" + at[2] + " " + at[3];
+        return result;
     }
-
-//    @Override
-//    public void setType(String s){
-//        super.setType(s);
-//    }
 }
