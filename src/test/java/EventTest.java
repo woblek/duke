@@ -12,6 +12,7 @@ class EventTest {
         assertEquals("[E][✘] watch movies with friends (at: 5/10/2019 1800)", event.toString());
     }
 
+
     @Test
     void getDate() {
         Integer[] date = {05,10,2019,1800};
