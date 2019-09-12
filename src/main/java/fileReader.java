@@ -3,9 +3,20 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.Scanner;
 
+
+/**
+ * This class represents the method needed to take a .txt file from the provided path
+ * and calls a method storage.load()
+ */
 public class fileReader {
     private static Storage storage = new Storage();
 
+    /**
+     * storage.load()
+     * @param s
+     * @param taskList
+     * @throws IOException
+     */
     public static void populateTaskList(String s, TaskList taskList) throws IOException {
 
         // Get the file

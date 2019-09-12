@@ -5,6 +5,10 @@ import java.util.Scanner;
 @SuppressWarnings("InfiniteLoopStatement")
 
 
+/**
+ * this class represents the main function
+ * of Duke
+ */
 public class Duke {
 
     private static Parser prsr = new Parser();

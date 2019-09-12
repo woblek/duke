@@ -1,11 +1,21 @@
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Storage class populates the duke tasklist with the .txt file specified in the path
+ */
 public class Storage {
 
     public Integer counterTaskList = 0;
 
-
+    /**
+     * load() reads each line of the .txt file using buffer reader
+     * by reading the first character of each line, load() populates the
+     * Duke tasklist with instances of either Todo,Event, or Deadline
+     * for each line
+     * @return tasklist
+     * @throws IOException
+     */
     public ArrayList<TaskforDuke> load() throws IOException {
 
         ArrayList<TaskforDuke> taskList = new ArrayList<TaskforDuke>(0);

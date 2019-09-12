@@ -1,5 +1,12 @@
+/**
+ * this class represents all the UI messaged output by duke
+ */
 public class Ui {
 
+
+    /**
+     * introduction message
+     */
     public void welcomeMessage(){
         String logo = "     ____        _        \n"
                 + "    |  _ \\ _   _| | _____ \n"
@@ -13,18 +20,28 @@ public class Ui {
         System.out.println("    __________________________________________________________________________________________\n");
     }
 
+    /**
+     * this method is the goodbye message at the end of Duke
+     */
     public void goodbyeMessage(){
         System.out.println("    __________________________________________________________________________________________\n");
         System.out.println("    Bye. Hope to see you again soon!");
         System.out.println("    __________________________________________________________________________________________\n");
     }
 
+
+    /**
+     * this method prints an error for unkownCommand
+     */
     public void unknownCommand(){
         System.out.println("    __________________________________________________________________________________________");
         System.out.println("    ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         System.out.println("    __________________________________________________________________________________________\n");
     }
 
+    /**
+     * this method prints an error for emptyString after the command
+     */
     public void dialogueEmpty(String s){
         Character first = s.charAt(0);
         if(first.equals('t')){

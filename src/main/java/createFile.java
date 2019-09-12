@@ -2,9 +2,17 @@ import java.io.*;
 import java.lang.*;
 import java.util.*;
 
+/**
+ * This class encompasses all methods required to populate the .txt file with data from the Duke tasklist
+ */
 public class createFile {
     private Formatter x;
 
+
+    /**
+     * Reads the .txt file specified in the path provided
+     * throws Exception if fails
+     */
     public void openFile(){
         try{
             x = new Formatter("C:\\Users\\Lee Raiyan\\Documents\\1. NUS\\Semester 3\\CS2113T Software Engineering\\duke\\data\\dukedata.txt");
@@ -15,6 +23,11 @@ public class createFile {
         }
     }
 
+    /**
+     * fills the .txt file with date from the tasklist using format class
+     * @param a
+     * @param taskList
+     */
     public void addRecords(Integer a, ArrayList<TaskforDuke> taskList){
         for (int i = 0; i < a; i++) {
             Character c1 = taskList.get(i).toString().charAt(1);
@@ -32,6 +45,9 @@ public class createFile {
         }
     }
 
+    /**
+     * closes the file
+     */
     public void closeFile(){
         x.close();
     }

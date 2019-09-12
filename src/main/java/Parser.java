@@ -1,5 +1,14 @@
+/**
+ * Parser class represents the all the possible commands that can be taken in by Duke
+ */
 public class Parser {
 
+    /**
+     * parseInput takes in the user's commands and executes specific methods based on each command
+     * @param s
+     * @param taskList
+     * @throws unknownCommandException
+     */
     public void parseInput(String s, TaskList taskList) throws unknownCommandException{
         Ui ui = new Ui();
 
