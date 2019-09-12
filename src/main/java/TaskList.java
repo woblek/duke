@@ -109,7 +109,8 @@ public class TaskList {
     }
 
     /**
-     * this method
+     * this method marks tasks as done and
+     * prints out which task has been marked as done
      * @param s
      */
     public void done(String s){
@@ -123,6 +124,11 @@ public class TaskList {
         }
     }
 
+    /**
+     * this task removes an instance of task from the tasklist
+     * depending on the index provided by user
+     * @param s
+     */
     public void delete(String s){
 
         if(taskList.size() > 0) {
