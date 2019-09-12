@@ -1,5 +1,24 @@
 public class Ui {
 
+    public void welcomeMessage(){
+        String logo = "     ____        _        \n"
+                + "    |  _ \\ _   _| | _____ \n"
+                + "    | | | | | | | |/ / _ \\\n"
+                + "    | |_| | |_| |   <  __/\n"
+                + "    |____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("    Hello from\n" + logo);
+        System.out.println("    __________________________________________________________________________________________");
+        System.out.println("    Hello! I'm Duke");
+        System.out.println("    What can I do for you?");
+        System.out.println("    __________________________________________________________________________________________\n");
+    }
+
+    public void goodbyeMessage(){
+        System.out.println("    __________________________________________________________________________________________\n");
+        System.out.println("    Bye. Hope to see you again soon!");
+        System.out.println("    __________________________________________________________________________________________\n");
+    }
+
     public void dialogueEmpty(String s){
         Character first = s.charAt(0);
         if(first.equals('t')){

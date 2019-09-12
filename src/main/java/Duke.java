@@ -13,7 +13,6 @@ public class Duke {
 
 
     public static void main(String[] args) throws IOException {
-        int counterTaskList = 0;
         ArrayList<TaskforDuke> taskList = new ArrayList<TaskforDuke>(0);
 
 
@@ -22,25 +21,19 @@ public class Duke {
 
         // Check if the specified file
         // Exists or not
+
         if (f.exists()) {
             taskList = storage.load();
-            counterTaskList = storage.counterTaskList;
         }
-        else
-            System.out.println("Does not Exists");
+        else {
+            System.out.println("File Not Found!");
+        }
 
 
 
-        String logo = "     ____        _        \n"
-                + "    |  _ \\ _   _| | _____ \n"
-                + "    | | | | | | | |/ / _ \\\n"
-                + "    | |_| | |_| |   <  __/\n"
-                + "    |____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("    Hello from\n" + logo);
-        System.out.println("    __________________________________________________________________________________________");
-        System.out.println("    Hello! I'm Duke");
-        System.out.println("    What can I do for you?");
-        System.out.println("    __________________________________________________________________________________________\n");
+
+        //prints welcome message
+        ui.welcomeMessage();
 
 
         String s = "null";
@@ -50,26 +43,22 @@ public class Duke {
 
             if (s.equals("bye")){
 
-
                 //save all data into text file
                 createFile g = new createFile();
                 g.openFile();
-                g.addRecords(counterTaskList,taskList);
+                g.addRecords(taskList.size(),taskList);
                 g.closeFile();
 
-
                 //print goodbye message
-                System.out.println("    __________________________________________________________________________________________\n");
-                System.out.println("    Bye. Hope to see you again soon!");
-                System.out.println("    __________________________________________________________________________________________\n");
+                ui.goodbyeMessage();
                 return;
             }
 
             else if (s.equals("list")){
-                if(counterTaskList>0) {
+                if(taskList.size()>0) {
                     System.out.println("    __________________________________________________________________________________________");
                     System.out.println("    Here are the tasks in your list:");
-                    for (int i = 0; i < counterTaskList; i++) {
+                    for (int i = 0; i < taskList.size(); i++) {
                         System.out.println("    " + (i + 1) + ". " + taskList.get(i).toString());
                         //                    System.out.println("    " + (i+1) + ". [" + taskList[i].type + "][" + taskList[i].getStatusIcon() + "] " + taskList[i].description + "\n");
                     }
@@ -101,7 +90,6 @@ public class Duke {
                     int indexDelete = Integer.parseInt(s.replaceAll("[\\D]", ""));
                     String sDelete = taskList.get(indexDelete-1).toString();
                     taskList.remove(indexDelete - 1);
-                    counterTaskList--;
 
                     //inform user of deletion
                     System.out.println("    __________________________________________________________________________________________");
@@ -123,43 +111,28 @@ public class Duke {
                 //adding the object to the object array
                 String sExtracted = s.replaceAll("todo ", "");
                 taskList.add(new Todo(sExtracted));
-                counterTaskList++;
                 System.out.println("    __________________________________________________________________________________________");
                 System.out.println("    Got it. I've added this task: " + sExtracted + "");
-                System.out.println("      " + taskList.get(counterTaskList - 1).toString());
-                System.out.println("    You now have " + counterTaskList + " task(s) in the list.");
+                System.out.println("      " + taskList.get(taskList.size() - 1).toString());
+                System.out.println("    You now have " + taskList.size() + " task(s) in the list.");
                 System.out.println("    __________________________________________________________________________________________\n");
             }
 
             else if (s.contains("deadline")){
-                //to check if the string is empty
-                if(prsr.isEmpty(s)){
-                    ui.dialogueEmpty(s);
-                    continue;
+                try{
+                    Integer[] date = Deadline.getByDate(s);
+                    String details = Deadline.getDetails(s);
+                    taskList.add(new Deadline(details, date));
+                    //inform user of the new record
+                    System.out.println("    __________________________________________________________________________________________");
+                    System.out.println("    Got it. I've added this task: " + details + "");
+                    System.out.println("      " + taskList.get(taskList.size()-1).toString());
+                    System.out.println("    You now have " + taskList.size() + " task(s) in the list.");
+                    System.out.println("    __________________________________________________________________________________________\n");
                 }
-
-                //adding the object to the object array
-                String sExtracted = s.replaceAll("deadline ", "");
-                String[] details = sExtracted.split("/by ", 2);
-                String[] dateString = details[1].split("/", 3);
-                String[] timeString = dateString[2].split(" ", 2);
-                Integer[] date = new Integer[4];
-                date[0] = Integer.parseInt(dateString[0]);
-                date[1] = Integer.parseInt(dateString[1]);
-                date[2] = Integer.parseInt(timeString[0]);
-                date[3] = Integer.parseInt(timeString[1]);
-
-                taskList.add(new Deadline(details[0], date));
-                counterTaskList++;
-
-
-                //inform user of the new record
-                System.out.println("    __________________________________________________________________________________________");
-                System.out.println("    Got it. I've added this task: " + details[0] + "");
-                System.out.println("      " + taskList.get(counterTaskList-1).toString());
-                System.out.println("    You now have " + counterTaskList + " task(s) in the list.");
-                System.out.println("    __________________________________________________________________________________________\n");
-
+                catch(invalidDeadlineException e){
+                    ui.dialogueEmpty(s);
+                }
             }
 
             else if(s.contains("event")){
@@ -180,15 +153,12 @@ public class Duke {
                 date[2] = Integer.parseInt(timeString[0]);
                 date[3] = Integer.parseInt(timeString[1]);
                 taskList.add(new Event(details[0], date));
-                counterTaskList++;
-
-
 
                 //inform user of new record
                 System.out.println("    __________________________________________________________________________________________");
                 System.out.println("    Got it. I've added this task: " + details[0] + "");
-                System.out.println("      " + taskList.get(counterTaskList-1).toString());
-                System.out.println("    You now have " + counterTaskList + " task(s) in the list.");
+                System.out.println("      " + taskList.get(taskList.size()-1).toString());
+                System.out.println("    You now have " + taskList.size() + " task(s) in the list.");
                 System.out.println("    __________________________________________________________________________________________\n");
 
             }
@@ -197,7 +167,7 @@ public class Duke {
                 String[] toFind = s.split(" ", 2);
                 System.out.println("    __________________________________________________________________________________________");
                 System.out.println("    Here are the matching tasks in your list:");
-                for(int i = 0; i < counterTaskList; i++){
+                for(int i = 0; i < taskList.size(); i++){
                     if(taskList.get(i).description.contains(toFind[1])){
                         System.out.println("    " + (i + 1) + ". " + taskList.get(i).toString());
                     }
