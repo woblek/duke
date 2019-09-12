@@ -1,8 +1,7 @@
 public class Parser {
 
-    public static Ui ui = new Ui();
-
     public void parseInput(String s, TaskList taskList) throws unknownCommandException{
+        Ui ui = new Ui();
 
         if (s.equals("bye")){
             //save all data into text file

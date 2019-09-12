@@ -9,7 +9,8 @@ public class TaskList {
 
     public void setTaskList(ArrayList<TaskforDuke> a) {
         this.taskList = a;
-        Parser.ui.welcomeMessage();
+        Ui ui = new Ui();
+        ui.welcomeMessage();
     }
 
     public ArrayList<TaskforDuke> getTaskList() {
@@ -65,7 +66,6 @@ public class TaskList {
             System.out.println("    Here are the tasks in your list:");
             for (int i = 0; i < taskList.size(); i++) {
                 System.out.println("    " + (i + 1) + ". " + taskList.get(i).toString());
-                //                    System.out.println("    " + (i+1) + ". [" + taskList[i].type + "][" + taskList[i].getStatusIcon() + "] " + taskList[i].description + "\n");
             }
             System.out.println("    __________________________________________________________________________________________\n");
         }
@@ -82,8 +82,8 @@ public class TaskList {
         if(indexDone > 0) {
             taskList.get(indexDone - 1).setDone();
             System.out.println("    __________________________________________________________________________________________");
-            System.out.println("    Nice! I've marked this task as done: " + "\n");
-            System.out.println("    " + taskList.get(indexDone - 1).toString());
+            System.out.println("    Nice! I've marked this task as done: ");
+            System.out.println("      " + taskList.get(indexDone - 1).toString());
             System.out.println("    __________________________________________________________________________________________\n");
         }
     }
@@ -98,7 +98,7 @@ public class TaskList {
             //inform user of deletion
             System.out.println("    __________________________________________________________________________________________");
             System.out.println("    Noted! I've removed this task:");
-            System.out.println("    " + sDelete);
+            System.out.println("      " + sDelete);
             System.out.println("    You now have " + taskList.size() + " tasks in the list");
             System.out.println("    __________________________________________________________________________________________\n");
         }
