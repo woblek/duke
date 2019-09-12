@@ -42,7 +42,7 @@ public class Ui {
 
         else if(first.equals('e')){
             System.out.println("    __________________________________________________________________________________________");
-            System.out.println("    ☹ OOPS!!!!! The description of an event cannot be empty!");
+            System.out.println("    ☹ OOPS!!!! The description of an event cannot be empty!");
             System.out.println("    __________________________________________________________________________________________\n");
         }
     }

@@ -7,6 +7,7 @@ public class Storage {
 
 
     public ArrayList<TaskforDuke> load() throws IOException {
+
         ArrayList<TaskforDuke> taskList = new ArrayList<TaskforDuke>(0);
 
         File file = new File("C:\\Users\\Lee Raiyan\\Documents\\1. NUS\\Semester 3\\CS2113T Software Engineering\\duke\\data\\dukedata.txt");
