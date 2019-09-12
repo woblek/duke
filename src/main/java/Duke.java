@@ -9,7 +9,6 @@ public class Duke {
 
     private static Parser prsr = new Parser();
     private static Ui ui = new Ui();
-    private static Storage storage = new Storage();
 
     public static void main(String[] args){
         TaskList taskList = new TaskList();
