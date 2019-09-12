@@ -9,6 +9,7 @@ public class TaskList {
 
     public void setTaskList(ArrayList<TaskforDuke> a) {
         this.taskList = a;
+        Parser.ui.welcomeMessage();
     }
 
     public ArrayList<TaskforDuke> getTaskList() {

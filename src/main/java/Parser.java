@@ -1,32 +1,72 @@
 public class Parser {
 
+    public static Ui ui = new Ui();
 
+    public void parseInput(String s, TaskList taskList) throws unknownCommandException{
 
-    public String parseInputTodo(String s){
-        return s.replaceAll("todo ", "");
-    }
+        if (s.equals("bye")){
+            //save all data into text file
+            createFile g = new createFile();
+            g.openFile();
+            g.addRecords(taskList.getTaskList().size(),taskList.getTaskList());
+            g.closeFile();
 
-
-    public boolean isEmpty(String s){
-        Character first = s.charAt(0);
-        if(first.equals('t')){
-            String checker0 = s.replaceAll("todo", "");
-            String checker1 = checker0.replaceAll(" ", "");
-            return checker1.isEmpty();
+            //print goodbye message
+            ui.goodbyeMessage();
+            System.exit(0);
         }
 
-        else if(first.equals('d')){
-            String checker0 = s.replaceAll("deadline", "");
-            String checker1 = checker0.replaceAll(" ", "");
-            return checker1.isEmpty();
+        else if (s.equals("list")){
+            taskList.list();
         }
 
-
-        else if(first.equals('e')){
-            String checker0 = s.replaceAll("event", "");
-            String checker1 = checker0.replaceAll(" ", "");
-            return checker1.isEmpty();
+        else if (s.contains("done")){
+            taskList.done(s);
         }
-        return false;
+
+        else if(s.contains("delete")){
+            taskList.delete(s);
+        }
+
+        else if ((s.contains("todo"))){
+            try{
+                String details = Todo.getDetails(s);
+                taskList.addTodo(details);
+            }
+            catch(invalidTodoException e){
+                ui.dialogueEmpty(s);
+            }
+        }
+
+        else if (s.contains("deadline")){
+            try{
+                Integer[] date = Deadline.getByDate(s);
+                String details = Deadline.getDetails(s);
+                taskList.addDeadline(details, date);
+            }
+            catch(invalidDeadlineException e){
+                ui.dialogueEmpty(s);
+            }
+        }
+
+        else if(s.contains("event")){
+
+            try{
+                Integer[] date = Event.getAtDate(s);
+                String details = Event.getDetails(s);
+                taskList.addEvent(details,date);
+            }
+
+            catch(invalidEventException e){
+                ui.dialogueEmpty(s);
+            }
+
+        }
+        else if(s.contains("find")){
+            taskList.find(s);
+        }
+        else{
+            throw new unknownCommandException();
+        }
     }
 }
