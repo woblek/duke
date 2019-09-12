@@ -12,7 +12,6 @@ public class Duke {
     private static Storage storage = new Storage();
 
     public static void main(String[] args) throws IOException {
-//        ArrayList<TaskforDuke> taskList = new ArrayList<TaskforDuke>(0);
         TaskList taskList = new TaskList();
 
         // Get the file
@@ -38,7 +37,6 @@ public class Duke {
             s = myObj.nextLine();  // Read user input
 
             if (s.equals("bye")){
-
                 //save all data into text file
                 createFile g = new createFile();
                 g.openFile();
@@ -51,66 +49,25 @@ public class Duke {
             }
 
             else if (s.equals("list")){
-                if(taskList.size()>0) {
-                    System.out.println("    __________________________________________________________________________________________");
-                    System.out.println("    Here are the tasks in your list:");
-                    for (int i = 0; i < taskList.size(); i++) {
-                        System.out.println("    " + (i + 1) + ". " + taskList.getTaskList().get(i).toString());
-                        //                    System.out.println("    " + (i+1) + ". [" + taskList[i].type + "][" + taskList[i].getStatusIcon() + "] " + taskList[i].description + "\n");
-                    }
-                    System.out.println("    __________________________________________________________________________________________\n");
-                }
-
-                else{
-                    System.out.println("    __________________________________________________________________________________________");
-                    System.out.println("    Your list is empty!");
-                    System.out.println("    __________________________________________________________________________________________\n");
-                }
+                taskList.list();
             }
 
             else if (s.contains("done")){
-                int indexDone = Integer.parseInt(s.replaceAll("[\\D]", ""));
-                if(indexDone > 0) {
-                    taskList.getTaskList().get(indexDone - 1).setDone();
-                    System.out.println("    __________________________________________________________________________________________");
-                    System.out.println("    Nice! I've marked this task as done: " + "\n");
-                    System.out.println("    " + taskList.getTaskList().get(indexDone - 1).toString());
-                    System.out.println("    __________________________________________________________________________________________\n");
-                }
+                taskList.done(s);
             }
 
             else if(s.contains("delete")){
-
-                if(taskList.size() > 0){
-                    int indexDelete = Integer.parseInt(s.replaceAll("[\\D]", ""));
-                    String sDelete = taskList.getTaskList().get(indexDelete-1).toString();
-                    taskList.getTaskList().remove(indexDelete - 1);
-
-                    //inform user of deletion
-                    System.out.println("    __________________________________________________________________________________________");
-                    System.out.println("    Noted! I've removed this task:");
-                    System.out.println("    " + sDelete);
-                    System.out.println("    You now have " + taskList.size() + " tasks in the list");
-                    System.out.println("    __________________________________________________________________________________________\n");
-                }
+                taskList.delete(s);
             }
 
             else if ((s.contains("todo"))){
-
-                //to check if the string is empty
-                if(prsr.isEmpty(s)){
-                    ui.dialogueEmpty(s);
-                    continue;
+                try{
+                    String details = Todo.getDetails(s);
+                    taskList.addTodo(details);
                 }
-
-                //adding the object to the object array
-                String sExtracted = s.replaceAll("todo ", "");
-                taskList.getTaskList().add(new Todo(sExtracted));
-                System.out.println("    __________________________________________________________________________________________");
-                System.out.println("    Got it. I've added this task: " + sExtracted + "");
-                System.out.println("      " + taskList.getTaskList().get(taskList.size() - 1).toString());
-                System.out.println("    You now have " + taskList.size() + " task(s) in the list.");
-                System.out.println("    __________________________________________________________________________________________\n");
+                catch(invalidTodoException e){
+                    ui.dialogueEmpty(s);
+                }
             }
 
             else if (s.contains("deadline")){
@@ -126,64 +83,23 @@ public class Duke {
 
             else if(s.contains("event")){
 
-                //try{
-//                    Integer[] date = Event.getAtDate(s);
-//                    String details = Event.getDetails(s);
-//                    taskList.addEvent(details,date);
-//                }
+                try{
+                    Integer[] date = Event.getAtDate(s);
+                    String details = Event.getDetails(s);
+                    taskList.addEvent(details,date);
+                }
 
-                //catch(invalidEventException e){
-//                    ui.dealogueEmpty(s);
-//                    }
-
-
-                //to check if the string is empty
-                if(prsr.isEmpty(s)){
+                catch(invalidEventException e){
                     ui.dialogueEmpty(s);
-                    continue;
-                }
-
-                //adding the object to the object array
-                String sExtracted = s.replaceAll("event ", "");
-                String[] details = sExtracted.split("/at ", 2);
-                String[] dateString = details[1].split("/", 3);
-                String[] timeString = dateString[2].split(" ", 2);
-                Integer[] date = new Integer[4];
-                date[0] = Integer.parseInt(dateString[0]);
-                date[1] = Integer.parseInt(dateString[1]);
-                date[2] = Integer.parseInt(timeString[0]);
-                date[3] = Integer.parseInt(timeString[1]);
-                taskList.getTaskList().add(new Event(details[0], date));
-
-                //inform user of new record
-                System.out.println("    __________________________________________________________________________________________");
-                System.out.println("    Got it. I've added this task: " + details[0] + "");
-                System.out.println("      " + taskList.getTaskList().get(taskList.size()-1).toString());
-                System.out.println("    You now have " + taskList.size() + " task(s) in the list.");
-                System.out.println("    __________________________________________________________________________________________\n");
-
-            }
-
-            else if(s.contains("find")){
-                String[] toFind = s.split(" ", 2);
-                System.out.println("    __________________________________________________________________________________________");
-                System.out.println("    Here are the matching tasks in your list:");
-                for(int i = 0; i < taskList.size(); i++){
-                    if(taskList.getTaskList().get(i).description.contains(toFind[1])){
-                        System.out.println("    " + (i + 1) + ". " + taskList.getTaskList().get(i).toString());
                     }
-                }
-                System.out.println("    __________________________________________________________________________________________\n");
-            }
 
+            }
+            else if(s.contains("find")){
+                taskList.find(s);
+            }
             else{
-                System.out.println("    __________________________________________________________________________________________");
-                System.out.println("    ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-                System.out.println("    __________________________________________________________________________________________\n");
+                ui.notRecognisedMessage();
             }
-
-
-
         }
     }
 }

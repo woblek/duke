@@ -19,6 +19,12 @@ public class Ui {
         System.out.println("    __________________________________________________________________________________________\n");
     }
 
+    public void notRecognisedMessage(){
+        System.out.println("    __________________________________________________________________________________________");
+        System.out.println("    ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        System.out.println("    __________________________________________________________________________________________\n");
+    }
+
     public void dialogueEmpty(String s){
         Character first = s.charAt(0);
         if(first.equals('t')){

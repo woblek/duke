@@ -18,9 +18,9 @@ public class Event extends TaskforDuke {
         return result;
     }
 
-    public static Integer[] getByDate(String s) throws invalidDeadlineException{
+    public static Integer[] getAtDate(String s) throws invalidEventException{
         if(s.equals("event")){
-            throw new invalidDeadlineException();
+            throw new invalidEventException();
         }
         String sExtracted = s.replaceAll("event ", "");
         String[] details = sExtracted.split("/at ", 2);
@@ -32,5 +32,16 @@ public class Event extends TaskforDuke {
         date[2] = Integer.parseInt(timeString[0]);
         date[3] = Integer.parseInt(timeString[1]);
         return date;
+    }
+
+
+    public static String getDetails(String s) throws invalidEventException{
+        if(s.equals("deadline")){
+            throw new invalidEventException();
+        }
+        String sExtracted = s.replaceAll("event ", "");
+        String[] details = sExtracted.split("/at ", 2);
+        return details[0];
+
     }
 }
